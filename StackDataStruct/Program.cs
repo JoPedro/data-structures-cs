@@ -7,6 +7,8 @@ namespace StackDataStruct
         static void Main(string[] args)
         {
             PilhaRBArray pilha = new PilhaRBArray();
+
+            Console.WriteLine(pilha.PopBlack());
             pilha.PushRed("a");
             
             // Testando alguns comandos

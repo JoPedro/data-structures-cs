@@ -76,13 +76,13 @@ namespace StackDataStruct
         public object PopRed()
         {
             try { return stackRN[topoRed--]; }
-            catch (EPilhaVazia) { throw new EPilhaVazia("A Pilha está vazia."); }
+            catch (IndexOutOfRangeException) { throw new EPilhaVazia("A Pilha está vazia."); }
         }
 
         public object PopBlack()
         {
             try { return stackRN[topoBlack++]; }
-            catch (EPilhaVazia) { throw new EPilhaVazia("A Pilha está vazia."); }
+            catch (IndexOutOfRangeException) { throw new EPilhaVazia("A Pilha está vazia."); }
         }
 
         public bool IsEmptyRed()
