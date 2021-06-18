@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StackDataStruct
 {
-    interface PilhaRedBlack
+    interface IPilhaRedBlack
     {
         /* Pilha Vermelha e Preta no mesmo array: 
          * Vermelha começa a partir do primeiro elemento, 

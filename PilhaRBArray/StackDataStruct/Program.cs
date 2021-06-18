@@ -8,7 +8,6 @@ namespace StackDataStruct
         {
             PilhaRBArray pilha = new PilhaRBArray();
 
-            Console.WriteLine(pilha.PopBlack());
             pilha.PushRed("a");
             
             // Testando alguns comandos
@@ -30,7 +29,10 @@ namespace StackDataStruct
             // Testando a expansão dinâmica
             for (int i = 0; i < 40; ++i)
             {
-                pilha.PushRed(i * 2);
+                if (i % 2 == 0)
+                    pilha.PushRed(i << 1);
+                else
+                    pilha.PushBlack('a' + i);
             }
 
             Console.WriteLine("[{0}]", string.Join(separator: ", ", pilha.TestArray()));

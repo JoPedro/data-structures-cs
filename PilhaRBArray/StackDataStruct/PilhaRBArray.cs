@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StackDataStruct
 {
-    public class PilhaRBArray : PilhaRedBlack
+    public class PilhaRBArray : IPilhaRedBlack
     {
         private object[] stackRN;
         private int topoRed;
@@ -35,25 +35,25 @@ namespace StackDataStruct
 
         public object TopRed()
         {
-            try { return stackRN[topoRed]; }
-            catch(EPilhaVazia) { throw new EPilhaVazia("A Pilha está vazia."); }
+            if (!IsEmptyRed()) { return stackRN[topoRed]; }
+            else { throw new EPilhaVazia("A Pilha está vazia."); }
         }
 
         public object TopBlack()
         {
-            try { return stackRN[topoBlack]; }
-            catch (EPilhaVazia) { throw new EPilhaVazia("A Pilha está vazia."); }
+            if (!IsEmptyBlack()) { return stackRN[topoBlack]; }
+            else { throw new EPilhaVazia("A Pilha está vazia."); }
         }
 
         public void PushRed(object o)
         {
-            if (Size() >= capacity - 1)
+            if (Size() >= capacity)
             {
-                Array.Resize(ref stackRN, capacity * 2);
-                int j = (capacity * 2) - 1;
+                Array.Resize(ref stackRN, capacity << 1);
+                int j = (capacity << 1) - 1;
                 for (int i = capacity - 1; i >= topoBlack; --i)
                     stackRN[j--] = stackRN[i];
-                capacity *= 2;
+                capacity <<= 1;
                 topoBlack = j + 1;
             }
             else stackRN[++topoRed] = o;
@@ -61,13 +61,13 @@ namespace StackDataStruct
 
         public void PushBlack(object o)
         {
-            if (Size() >= capacity - 1)
+            if (Size() >= capacity)
             {
-                Array.Resize(ref stackRN, capacity * 2);
-                int j = (capacity * 2) - 1;
+                Array.Resize(ref stackRN, capacity << 1);
+                int j = (capacity << 1) - 1;
                 for (int i = capacity - 1; i >= topoBlack; --i)
                     stackRN[j--] = stackRN[i];
-                capacity *= 2;
+                capacity <<= 1;
                 topoBlack = j + 1;
             }
             else stackRN[--topoBlack] = o;
@@ -75,14 +75,14 @@ namespace StackDataStruct
 
         public object PopRed()
         {
-            try { return stackRN[topoRed--]; }
-            catch (IndexOutOfRangeException) { throw new EPilhaVazia("A Pilha está vazia."); }
+            if (!IsEmptyRed()) { return stackRN[topoRed--]; }
+            else { throw new EPilhaVazia("A Pilha está vazia."); }
         }
 
         public object PopBlack()
         {
-            try { return stackRN[topoBlack++]; }
-            catch (IndexOutOfRangeException) { throw new EPilhaVazia("A Pilha está vazia."); }
+            if (!IsEmptyBlack()) { return stackRN[topoBlack--]; }
+            else { throw new EPilhaVazia("A Pilha está vazia."); }
         }
 
         public bool IsEmptyRed()
@@ -93,7 +93,7 @@ namespace StackDataStruct
 
         public bool IsEmptyBlack()
         {
-            if (topoBlack == -1) return true;
+            if (topoBlack == capacity) return true;
             else return false;
         }
 
