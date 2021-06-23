@@ -8,6 +8,8 @@ namespace FilaArray
 {
     class TADFila : IFila
     {
+        // Implementação de TAD (Tipo Abstrato de Dado) Fila com Array
+
         private object[] queueArray;
         private int capacity;
         private int inicio;
@@ -21,9 +23,36 @@ namespace FilaArray
             queueArray = new object[capacity];
         }
 
+        public void Queue(object o)
+        {
+            if (Size() >= capacity - 1)
+            {
+                Array.Resize(ref queueArray, capacity << 1);
+                fim = capacity;
+                capacity <<= 1;               
+            }
+            else
+            {
+                queueArray[fim] = o;
+                fim = (fim + 1) % capacity;
+            }
+        }
+
+        public object Dequeue()
+        {
+            if (!IsEmpty())
+            {
+                object o = queueArray[inicio];
+                inicio = (inicio + 1) % capacity;
+                return o;
+            }
+            else throw new EFilaVazia("A fila está vazia.");
+        }
+
         public object First()
         {
-            return queueArray[inicio];
+            if (!IsEmpty()) return queueArray[inicio];
+            else throw new EFilaVazia("A Fila está vazia.");
         }
 
         public bool IsEmpty()
