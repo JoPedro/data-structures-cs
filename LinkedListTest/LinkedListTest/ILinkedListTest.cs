@@ -8,11 +8,12 @@ namespace LinkedListTest
 {
     interface ILinkedListTest
     {
-        public void InsertAt();
-        public void Append();
-        public void AddBeginning();
-        public Node Delete();
+        public void InsertAt(int index, object o);
+        public void Append(object o);
+        public void AddBeginning(object o);
+        public Node DeleteAt(int index);
+        public Node Pop();
         public Node DeleteBeginning();
-        public Node Get();
+        public Node Get(int index);
     }
 }

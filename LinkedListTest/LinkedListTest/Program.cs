@@ -6,7 +6,23 @@ namespace LinkedListTest
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            // Testando lista simplesmente encadeada: 
+            Console.WriteLine("Teste de Lista Simplesmente Encadeada manual:");
+            Console.WriteLine();
+
+            LinkedListTest lista = new LinkedListTest(0);
+            for (int i = 1; i < 25; ++i)
+                lista.Append(i * 5);
+
+            Console.Write("Lista inteira: ");
+            lista.PrintList();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.Write("Retornando os dados do Node de índice 4: ");
+            Console.WriteLine(lista.Get(4).data);
+            Console.WriteLine();
+            Console.WriteLine();
+
         }
     }
 }
