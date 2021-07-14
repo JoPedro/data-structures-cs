@@ -100,18 +100,24 @@ namespace ArvoreGenerica
         }
 
         public int height()
-        {         
-            int altura = 0;
-            No n = raiz;
-            while (true)
+        {
+            return height(raiz);
+        }
+
+        private int height(No n)
+        {
+            if (isExternal(n)) return 0;
+            else
             {
-                if (isExternal(n)) break;
-                else
+                int altura = 0;
+                IEnumerator filhos = n.children();
+                while (filhos.MoveNext())
                 {
-                    
+                    altura = Math.Max(altura, height((No)filhos.Current));
                 }
+
+                return 1 + altura;
             }
-            return altura;
         }
 
         public IEnumerator elements()
@@ -139,8 +145,8 @@ namespace ArvoreGenerica
 
         public object replace(No v, object o)
         {
-            //método exercício
-            return null;
+            v.setElement(o);
+            return v.element();
         }
     }
 }
