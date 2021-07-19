@@ -134,16 +134,26 @@ namespace ArvoreGenerica
             {
                 IEnumerator filhos = n.Children();
                 while (filhos.MoveNext())
-                {
                     Elements((No)filhos.Current, elems);
-                }
             }
         }
 
         public IEnumerator Nos()
         {
-            //método exercício
-            return null;
+            ArrayList nos = new ArrayList();
+            Nos(raiz, nos);
+            return nos.GetEnumerator();
+        }
+
+        private void Nos(No n, ArrayList nos)
+        {
+            nos.Add(n);
+            if (IsInternal(n))
+            {
+                IEnumerator filhos = n.Children();
+                while (filhos.MoveNext())
+                    Nos((No)filhos.Current, nos);
+            }
         }
 
         public int Size()
