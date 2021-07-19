@@ -20,74 +20,74 @@ namespace ArvoreGenerica
             tamanho = 1;
         }
 
-        public No root()
+        public No Root()
         {
             return raiz;
         }
 
-        public No parent(No v)
+        public No Parent(No v)
         {
-            return v.parent();
+            return v.Parent();
         }
 
-        public IEnumerator children(No v)
+        public IEnumerator Children(No v)
         {
-            return v.children();
+            return v.Children();
         }
 
-        public bool isInternal(No v)
+        public bool IsInternal(No v)
         {
-            return v.childrenNumber() > 0;
+            return v.ChildrenNumber() > 0;
         }
 
-        public bool isExternal(No v)
+        public bool IsExternal(No v)
         {
-            return v.childrenNumber() == 0;
+            return v.ChildrenNumber() == 0;
         }
 
-        public bool isRoot(No v)
+        public bool IsRoot(No v)
         {
             return v == raiz;
         }
 
-        public void addChild(No v, object o)
+        public void AddChild(No v, object o)
         {
             No novo = new No(v, o);
-            v.addChild(novo);
+            v.AddChild(novo);
             tamanho++;
         }
 
-        public object remove(No v)
+        public object Remove(No v)
         {
-            No pai = v.parent();
-            if ((pai != null) || isExternal(v))
+            No pai = v.Parent();
+            if ((pai != null) || IsExternal(v))
             {
-                pai.removeChild(v);
+                pai.RemoveChild(v);
             }
             else
             {
                 throw new SystemException();
             }
 
-            object o = v.element();
+            object o = v.Element();
             tamanho--;
             return o;
         }
 
-        public void swapElements(No v, No w)
+        public void SwapElements(No v, No w)
         {
-            object o = v.element();
-            v.setElement(w.element());
-            w.setElement(o);
+            object o = v.Element();
+            v.SetElement(w.Element());
+            w.SetElement(o);
         }
 
-        public int depth(No v)
+        public int Depth(No v)
         {
-            int profundidade = this.profundidade(v);
+            int profundidade = this.Profundidade(v);
             return profundidade;
         }
 
-        private int profundidade(No v)
+        private int Profundidade(No v)
         {
             if (v == raiz)
             {
@@ -95,35 +95,49 @@ namespace ArvoreGenerica
             }
             else
             {
-                return 1 + profundidade(v.parent());
+                return 1 + Profundidade(v.Parent());
             }
         }
 
-        public int height()
+        public int Height()
         {
-            return height(raiz);
+            return Height(raiz);
         }
 
-        private int height(No n)
+        private int Height(No n)
         {
-            if (isExternal(n)) return 0;
+            if (IsExternal(n)) return 0;
             else
             {
                 int altura = 0;
-                IEnumerator filhos = n.children();
+                IEnumerator filhos = n.Children();
                 while (filhos.MoveNext())
                 {
-                    altura = Math.Max(altura, height((No)filhos.Current));
+                    altura = Math.Max(altura, Height((No)filhos.Current));
                 }
 
                 return 1 + altura;
             }
         }
 
-        public IEnumerator elements()
+        public IEnumerator Elements()
         {
-            //método exercício
-            return null;
+            ArrayList elems = new ArrayList();
+            Elements(raiz, elems);
+            return elems.GetEnumerator();
+        }
+
+        private void Elements(No n, ArrayList elems)
+        {
+            elems.Add(n.Element());
+            if (IsInternal(n))
+            {
+                IEnumerator filhos = n.Children();
+                while (filhos.MoveNext())
+                {
+                    Elements((No)filhos.Current, elems);
+                }
+            }
         }
 
         public IEnumerator Nos()
@@ -132,21 +146,21 @@ namespace ArvoreGenerica
             return null;
         }
 
-        public int size()
+        public int Size()
         {
             //método exercício
             return 0;
         }
 
-        public bool isEmpty()
+        public bool IsEmpty()
         {
             return false;
         }
 
-        public object replace(No v, object o)
+        public object Replace(No v, object o)
         {
-            v.setElement(o);
-            return v.element();
+            v.SetElement(o);
+            return v.Element();
         }
     }
 }

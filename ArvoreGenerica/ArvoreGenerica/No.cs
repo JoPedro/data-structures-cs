@@ -19,38 +19,38 @@ namespace ArvoreGenerica
             this.o = o;
         }
 
-        public object element()
+        public object Element()
         {
             return o;
         }
 
-        public No parent()
+        public No Parent()
         {
             return pai;
         }
 
-        public void setElement(object o)
+        public void SetElement(object o)
         {
             this.o = o;
         }
 
-        public void addChild(No o)
+        public void AddChild(No o)
         {
 
             filhos.Add(o);
         }
 
-        public void removeChild(No o)
+        public void RemoveChild(No o)
         {
             filhos.Remove(o);
         }
 
-        public int childrenNumber()
+        public int ChildrenNumber()
         {
             return filhos.Count;
         }
 
-        public IEnumerator children()
+        public IEnumerator Children()
         {
             return filhos.GetEnumerator();
         }
