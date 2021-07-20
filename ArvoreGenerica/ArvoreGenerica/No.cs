@@ -54,5 +54,10 @@ namespace ArvoreGenerica
         {
             return filhos.GetEnumerator();
         }
+
+        public ArrayList ChildrenTest()
+        {
+            return filhos;
+        }
     }
 }

@@ -158,8 +158,7 @@ namespace ArvoreGenerica
 
         public int Size()
         {
-            //método exercício
-            return 0;
+            return tamanho;
         }
 
         public bool IsEmpty()
