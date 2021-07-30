@@ -6,7 +6,12 @@ namespace ArvoreBinariaDePesquisa
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Árvore Binária de Pesquisa\n");
+
+            TesteArvoreBinaria treeTeste = new TesteArvoreBinaria();
+
+            // Teste realizado utilizando a classe de testes
+            treeTeste.Teste();
         }
     }
 }
