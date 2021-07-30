@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31402.337
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TADVetor", "TADVetor\TADVetor.csproj", "{181009BF-8308-4A9E-AF62-4EA0342F5BF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{181009BF-8308-4A9E-AF62-4EA0342F5BF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{181009BF-8308-4A9E-AF62-4EA0342F5BF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{181009BF-8308-4A9E-AF62-4EA0342F5BF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{181009BF-8308-4A9E-AF62-4EA0342F5BF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F2E6AB9-8546-432A-8064-25ACCB96F119}
+	EndGlobalSection
+EndGlobal
