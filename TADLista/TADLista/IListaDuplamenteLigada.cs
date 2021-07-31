@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinkedListTest
+namespace TADLista
 {
-    interface ILinkedListTest
+    interface IListaDuplamenteLigada
     {
         public void InsertAt(int index, object o);
         public void Append(object o);

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31402.337
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TADLista", "TADLista\TADLista.csproj", "{6AAAFC8B-F9A5-4560-973B-760A47149567}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6AAAFC8B-F9A5-4560-973B-760A47149567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AAAFC8B-F9A5-4560-973B-760A47149567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AAAFC8B-F9A5-4560-973B-760A47149567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AAAFC8B-F9A5-4560-973B-760A47149567}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6BEE955C-38D6-4555-B3E1-313BF9780C71}
+	EndGlobalSection
+EndGlobal

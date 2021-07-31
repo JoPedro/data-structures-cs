@@ -23,6 +23,11 @@ namespace LinkedListTest
             Console.WriteLine();
             Console.WriteLine();
 
+            lista.InsertAt(4, "Vinte");
+            lista.PrintList();
+
+            Console.WriteLine("\n");
+            Console.WriteLine("Tamanho da lista: " + lista.Size());
         }
     }
 }

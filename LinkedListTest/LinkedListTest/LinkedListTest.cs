@@ -9,19 +9,19 @@ namespace LinkedListTest
     class LinkedListTest : ILinkedListTest
     {
         public Node start;
+        private int size;
 
         public LinkedListTest(object o)
         {
             start = new Node(o);
+            size = 1;
         }
 
         public Node Get(int index)
         {
             Node n = start;
             for (int i = 0; i < index; ++i)
-            {
                 n = n.next;
-            }
             return n;
         }
 
@@ -29,8 +29,11 @@ namespace LinkedListTest
         {
             if (index > 0)
             {
-                Node n = Get(index - 1);
-                n.next = new Node(o);
+                Node noAnterior = Get(index - 1);
+                Node newNode = new Node(o);
+                newNode.next = noAnterior.next;
+                noAnterior.next = newNode;
+                size++;
             }
             else AddBeginning(o);
         }
@@ -44,6 +47,7 @@ namespace LinkedListTest
                 else n = n.next;
             }              
             n.next = new Node(o);
+            size++;
         }
 
         public void AddBeginning(object o)
@@ -51,43 +55,49 @@ namespace LinkedListTest
             Node n = new Node(o);
             n.next = start;
             start = n;
+            size++;
         }
 
         public Node DeleteBeginning()
         {
             Node n = start;
             start = start.next;
-            return n;
+            size--;
+            return n;           
         }
 
         public Node DeleteAt(int index)
         {
-            if (index > 0)
+            Node n = Get(index - 1);
+            Node n_aux = n.next;
+
+            if (index == size - 1) Pop();
+            else if (index > 0)
             {
-                Node n = Get(index - 1);
-                Node n_aux = n.next;
                 n.next = n.next.next;
-                return n_aux;
+                size--;               
             }
-            else return DeleteBeginning();
+            else DeleteBeginning();           
+            
+            return n_aux;
         }
 
         public Node Pop()
         {
             Node n = start;
-            int i = 0;
             while (true)
             {
                 if (n.next == null) break;
-                else
-                {
-                    n = n.next;
-                    ++i;
-                }
+                else n = n.next;
             }
             Node n_aux = n;
-            DeleteAt(i);
+            DeleteAt(size-- - 1);
             return n_aux;
+        }
+
+        public int Size()
+        {
+            return size;
         }
 
         // Método para testes apenas
