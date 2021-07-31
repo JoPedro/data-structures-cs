@@ -19,14 +19,14 @@ namespace TADVetor
         {
             for (int i = 0; i < 99; ++i)
             {
-                char c = (char)65;
-                vetor.InsertAtRank(i, 91 + c);
+                string s = "Elem " + i.ToString();
+                vetor.InsertAtRank(i, s);
             }
 
             PrintarVetor();
 
-            for (int i = 0; i < 3; ++i)
-                vetor.RemoveAtRank(i * 3);
+            for (int i = 0; i < 20; ++i)
+                vetor.RemoveAtRank(i * 2);
 
             PrintarVetor();
 
@@ -42,8 +42,7 @@ namespace TADVetor
             {
                 Console.Write(vetor.ElemAtRank(i) + ", ");
             }
-            Console.Write("}");
-            Console.WriteLine();
+            Console.Write("}\n\n");
         }
     }
 }

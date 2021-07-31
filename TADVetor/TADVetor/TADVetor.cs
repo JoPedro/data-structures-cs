@@ -15,7 +15,7 @@ namespace TADVetor
         public TADVetor()
         {
             capacity = 64;
-            arr = new object[capacity];
+            arr = new object[64];
             tamanho = 0;
         }
 
@@ -38,13 +38,13 @@ namespace TADVetor
         }
 
         public void InsertAtRank(int r, object o)
-        {            
-            if (r >= tamanho)
+        {          
+            if (tamanho >= capacity)
             {
                 capacity <<= 1;
                 Array.Resize(ref arr, capacity);               
             }
-
+     
             for (int i = tamanho; i > r; --i)
                 arr[i] = arr[i - 1];
 
