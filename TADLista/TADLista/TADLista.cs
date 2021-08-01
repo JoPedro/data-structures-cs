@@ -108,5 +108,10 @@ namespace TADLista
         {
             return lista.Size();
         }
+
+        public void PrintList()
+        {
+            lista.PrintList();
+        }
     }
 }
