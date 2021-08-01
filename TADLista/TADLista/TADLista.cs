@@ -29,24 +29,51 @@ namespace TADLista
 
         public void InsertBefore(Node n, object o)
         {
-            Node noAnterior = n.prev;
-            Node newNode = new Node(o);
-            n.prev = newNode;
-            noAnterior.next = newNode;
+            if (n.prev != null)
+            {
+                Node noAnterior = n.prev;
+                Node newNode = new Node(o);
+                n.prev = newNode;
+                noAnterior.next = newNode;
 
-            newNode.prev = noAnterior;
-            newNode.next = n;
+                newNode.prev = noAnterior;
+                newNode.next = n;
+
+                lista.tamanho++;
+            }
+            else
+            {
+                Node newNode = new Node(o);
+                newNode.next = n;
+                newNode.prev = null;
+                n.prev = newNode;
+                lista.head = newNode;
+                lista.tamanho++;
+            }
         }
 
         public void InsertAfter(Node n, object o)
         {
-            Node noProximo = n.next;
-            Node newNode = new Node(o);
-            n.next = newNode;
-            noProximo.prev = newNode;
+            if (n.next != null)
+            {
+                Node noProximo = n.next;
+                Node newNode = new Node(o);
+                n.next = newNode;
+                noProximo.prev = newNode;
 
-            newNode.next = noProximo;
-            newNode.prev = n;
+                newNode.next = noProximo;
+                newNode.prev = n;
+                lista.tamanho++;
+            }
+            else
+            {
+                Node newNode = new Node(o);
+                newNode.prev = n;
+                newNode.next = null;
+                n.next = newNode;
+                lista.tail = newNode;
+                lista.tamanho++;
+            }
         }
 
         public void InsertFirst(object o)
@@ -61,9 +88,28 @@ namespace TADLista
         
         public Node Remove(Node n)
         {
-            n.prev.next = n.next;
-            n.next.prev = n.prev;
-            return n;
+            if (IsEmpty()) throw new EListaVazia("A Lista está vazia.");
+            if (n.next != null && n.prev != null)
+            {
+                n.prev.next = n.next;
+                n.next.prev = n.prev;
+                lista.tamanho--;
+                return n;
+            }
+            else if (n.next == null)
+            {
+                n.prev.next = null;
+                lista.tail = n.prev;
+                lista.tamanho--;
+                return n;
+            }
+            else
+            {
+                n.next.prev = null;
+                lista.head = n.next;
+                lista.tamanho--;
+                return n;
+            }
         }
 
         public Node Before(Node n)
@@ -112,6 +158,11 @@ namespace TADLista
         public void PrintList()
         {
             lista.PrintList();
+            Console.WriteLine();
+
+            Console.WriteLine("Tamanho: " + lista.Size());
+            Console.WriteLine("Head: " + First().Data);
+            Console.WriteLine("Tail: " + Last().Data + "\n");
         }
     }
 }

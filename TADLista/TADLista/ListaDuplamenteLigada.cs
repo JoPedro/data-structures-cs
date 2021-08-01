@@ -10,7 +10,7 @@ namespace TADLista
     {
         public Node head;
         public Node tail;
-        private int tamanho;
+        internal int tamanho;
 
         public ListaDuplamenteLigada()
         {
@@ -118,13 +118,16 @@ namespace TADLista
 
         public Node DeleteAt(int index)
         {
-            Node noAnterior = Get(index - 1);
-            Node n_aux = noAnterior.next;
+            if (IsEmpty()) throw new EListaVazia("A Lista está vazia.");
+
+            Node n = Get(index);
+            Node n_aux = n;
 
             if (index == tamanho - 1) Pop();
             else if (index > 0)
             {
-                noAnterior.next = noAnterior.next.next;
+                n.prev.next = n.next;
+                n.next.prev = n.prev;
                 tamanho--;
             }
             else DeleteBeginning();
@@ -134,17 +137,20 @@ namespace TADLista
 
         public Node Pop()
         {
+            if (IsEmpty()) throw new EListaVazia("A Lista está vazia.");
             Node n = tail;
-            Node n_aux = n;
             tail = n.prev;
+            tail.next = null;
             tamanho--;
-            return n_aux;
+            return n;
         }
 
         public Node DeleteBeginning()
         {
+            if (IsEmpty()) throw new EListaVazia("A Lista está vazia.");
             Node n = head;
             head = head.next;
+            head.prev = null;
             tamanho--;
             return n;
         }
