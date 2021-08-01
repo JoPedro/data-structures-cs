@@ -16,5 +16,6 @@ namespace TADLista
         public Node DeleteBeginning();
         public Node Get(int index);
         public int Size();
+        public bool IsEmpty();
     }
 }

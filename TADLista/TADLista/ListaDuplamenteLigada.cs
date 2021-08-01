@@ -8,8 +8,8 @@ namespace TADLista
 {
     class ListaDuplamenteLigada : IListaDuplamenteLigada
     {
-        private Node head;
-        private Node tail;
+        public Node head;
+        public Node tail;
         private int tamanho;
 
         public ListaDuplamenteLigada()
@@ -52,39 +52,68 @@ namespace TADLista
         {
             if (index > 0)
             {
-                Node noAnterior = Get(index - 1);
-                Node noProximo = Get(index + 1);
+                if (index == tamanho) Append(o);
+                else
+                {
+                    Node noAnterior = Get(index - 1);
+                    Node noProximo = Get(index);
 
-                Node n = new Node(o);
-                noAnterior.next = n;
-                noProximo.prev = n;
+                    Node n = new Node(o);
+                    noAnterior.next = n;
+                    noProximo.prev = n;
 
-                n.prev = noAnterior;
-                n.next = noProximo;
+                    n.prev = noAnterior;
+                    n.next = noProximo;
 
-                tamanho++;
+                    tamanho++;
+                }
             }
             else AddBeginning(o);
         }
 
         public void AddBeginning(object o)
         {
-            Node n = head;
-            Node newNode = new Node(o);
-            n.prev = newNode;
-            newNode.next = n;
-            head = newNode;
-            tamanho++;
+            if (head.Data == null)
+            {
+                head.Data = o;
+                tamanho++;
+            }
+            else
+            {
+                Node n = head;
+                Node newNode = new Node(o);
+                n.prev = newNode;
+                newNode.next = n;
+                head = newNode;
+                tamanho++;
+            }
         }
 
         public void Append(object o)
         {
-            Node n = tail;
-            Node newNode = new Node(o);
-            n.next = newNode;
-            newNode.prev = n;
-            tail = newNode;
-            tamanho++;
+            if (!IsEmpty())
+            {
+                if (tamanho == 1 && head.Data != null)
+                {
+                    tail.Data = o;
+                    tamanho++;
+                }
+                else
+                {
+                    Node n = tail;
+                    Node newNode = new Node(o);
+                    n.next = newNode;
+                    newNode.prev = n;
+                    tail = newNode;
+                    tamanho++;
+                }
+                
+            }
+            else
+            {
+                head.Data = o;
+                tamanho++;
+            }                        
         }
 
         public Node DeleteAt(int index)
@@ -123,6 +152,31 @@ namespace TADLista
         public int Size()
         {
             return tamanho;
+        }
+
+        // Método para testes apenas
+        public void PrintList()
+        {
+            Node n = head;
+            while (true)
+            {
+                if (n.next == null)
+                {
+                    Console.Write(n.Data.ToString(), ".");
+                    break;
+                }
+                else
+                {
+                    Console.Write(n.Data.ToString() + ", ");
+                    n = n.next;
+                }
+            }
+        }
+
+        public bool IsEmpty()
+        {
+            if (tamanho == 0) return true;
+            else return false;
         }
     }
 }

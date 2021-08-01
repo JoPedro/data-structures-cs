@@ -9,7 +9,11 @@ namespace TADLista
     class Node
     {
         private object data;
-        public object Data { get; set; }
+        public object Data
+        {
+            get { return data; }
+            set { data = value; }
+        }
 
         public Node next;
         public Node prev;
