@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TADFilaPrioridadeHeapArray
 {
-    class Elemento
+    class Item
     {
         public int Key { get; set; }
-        public object Content { get; set; }
+        public object Value { get; set; }
     }
 }
