@@ -19,6 +19,11 @@ namespace TADFilaPrioridadeHeapArray
             capacity = 32;
         }
 
+        public void UpHeap()
+        {
+
+        }
+
         public void DownHeap()
         {
             int i = 1;
@@ -31,10 +36,13 @@ namespace TADFilaPrioridadeHeapArray
                     Swap(arr[i], arr[2 * i]);
                     i *= 2;
                 }
-                else if (TADComparadorNumero.Compare(arr[i], arr[2 * i + 1]) == 1 || TADComparadorNumero.Compare(arr[i], arr[2 * i + 1]) == 0)
+                else if (2 * i + 1 <= tamanho)
                 {
-                    Swap(arr[i], arr[2 * i + 1]);
-                    i = i * 2 + 1;
+                    if (TADComparadorNumero.Compare(arr[i], arr[2 * i + 1]) == 1 || TADComparadorNumero.Compare(arr[i], arr[2 * i + 1]) == 0)
+                    {
+                        Swap(arr[i], arr[2 * i + 1]);
+                        i = i * 2 + 1;
+                    }
                 }
                 else break;
             }           
@@ -59,12 +67,19 @@ namespace TADFilaPrioridadeHeapArray
             object aux = e.Value();
             e.SetValue(f.Value());
             f.SetValue(aux);
+
+            int aux1 = (int)e.Key();
+            e.SetKey((int)f.Key());
+            f.SetKey(aux1);
         }
 
         public Item RemoveMin()
         {
             Swap(arr[1], arr[tamanho]);
-            return arr[tamanho--];
+            Item itemRemovido = arr[tamanho];
+            arr[tamanho--] = null;
+            DownHeap();
+            return itemRemovido;
         }
 
         public Item Min()
@@ -88,7 +103,6 @@ namespace TADFilaPrioridadeHeapArray
             while(Size() > 0)
             {
                 Console.Write(RemoveMin().Value() + ", ");
-                DownHeap();
             }
         }
     }

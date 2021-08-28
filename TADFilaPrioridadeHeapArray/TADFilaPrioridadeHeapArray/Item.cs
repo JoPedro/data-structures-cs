@@ -31,5 +31,10 @@ namespace TADFilaPrioridadeHeapArray
         {
             valor = o;
         }
+
+        public void SetKey(int i)
+        {
+            numero = i;
+        }
     }
 }
