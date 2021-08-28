@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace TADFilaPrioridadeHeapArray
 {
-    class FilaPrioridadeHeapArray
+    class FilaPrioridadeHeapArray : IFilaPrioridade
     {
         private Item[] arr;
         private int tamanho;
         private int capacity;
 
-        public void UpHeap()
+        public FilaPrioridadeHeapArray()
         {
-
+            arr = new Item[32];
+            tamanho = 0;
+            capacity = 32;
         }
 
         public void DownHeap()
@@ -24,12 +26,12 @@ namespace TADFilaPrioridadeHeapArray
             {
                 if (2 * i > tamanho)
                     break;
-                if (arr[i].Key >= arr[2 * i].Key)
+                if (TADComparadorNumero.Compare(arr[i], arr[2 * i]) == 1 || TADComparadorNumero.Compare(arr[i], arr[2 * i]) == 0)
                 {
                     Swap(arr[i], arr[2 * i]);
                     i *= 2;
                 }
-                else if (arr[i].Key >= arr[2 * i + 1].Key)
+                else if (TADComparadorNumero.Compare(arr[i], arr[2 * i + 1]) == 1 || TADComparadorNumero.Compare(arr[i], arr[2 * i + 1]) == 0)
                 {
                     Swap(arr[i], arr[2 * i + 1]);
                     i = i * 2 + 1;
@@ -38,8 +40,10 @@ namespace TADFilaPrioridadeHeapArray
             }           
         }
 
-        public void Inserir(Item elem)
+        public void Inserir(object k, object o)
         {
+            int key = (int)k;
+            Item elem = new Item(key, o);
             if (tamanho + 1 < capacity)
                 arr[tamanho++ + 1] = elem;
             else
@@ -52,17 +56,15 @@ namespace TADFilaPrioridadeHeapArray
 
         public void Swap(Item e, Item f)
         {
-            object aux = e.Value;
-            e.Value = f.Value;
-            f.Value = aux;
+            object aux = e.Value();
+            e.SetValue(f.Value());
+            f.SetValue(aux);
         }
 
         public Item RemoveMin()
         {
-            Item itemRemovido = arr[1];
-            arr[1] = arr[tamanho];
-            tamanho--;
-            return itemRemovido;
+            Swap(arr[1], arr[tamanho]);
+            return arr[tamanho--];
         }
 
         public Item Min()
@@ -77,7 +79,17 @@ namespace TADFilaPrioridadeHeapArray
 
         public bool IsEmpty()
         {
+            if (tamanho == 0) return true;
+            else return false;
+        }
 
+        public void Teste()
+        {
+            while(Size() > 0)
+            {
+                Console.Write(RemoveMin().Value() + ", ");
+                DownHeap();
+            }
         }
     }
 }

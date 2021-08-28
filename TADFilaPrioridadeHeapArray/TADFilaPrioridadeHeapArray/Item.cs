@@ -6,9 +6,30 @@ using System.Threading.Tasks;
 
 namespace TADFilaPrioridadeHeapArray
 {
-    class Item
+    class Item : IItem
     {
-        public int Key { get; set; }
-        public object Value { get; set; }
+        private int numero;
+        private object valor;
+
+        public Item(int numero, object valor)
+        {
+            this.numero = numero;
+            this.valor = valor;
+        }
+
+        public object Key()
+        {
+            return numero;
+        }
+
+        public object Value()
+        {
+            return valor;
+        }
+
+        public void SetValue(object o)
+        {
+            valor = o;
+        }
     }
 }
