@@ -21,7 +21,17 @@ namespace TADFilaPrioridadeHeapArray
 
         public void UpHeap()
         {
-
+            int i = tamanho;
+            while (true)
+            {
+                if (i == 1) break;
+                if (TADComparadorNumero.Compare(arr[i], arr[i / 2]) == -1 || TADComparadorNumero.Compare(arr[i], arr[i / 2]) == 0)
+                {
+                    Swap(arr[i], arr[i / 2]);
+                    i /= 2;
+                }
+                else break;
+            }
         }
 
         public void DownHeap()
@@ -33,15 +43,23 @@ namespace TADFilaPrioridadeHeapArray
                     break;
                 if (TADComparadorNumero.Compare(arr[i], arr[2 * i]) == 1 || TADComparadorNumero.Compare(arr[i], arr[2 * i]) == 0)
                 {
-                    Swap(arr[i], arr[2 * i]);
-                    i *= 2;
-                }
-                else if (2 * i + 1 <= tamanho)
-                {
-                    if (TADComparadorNumero.Compare(arr[i], arr[2 * i + 1]) == 1 || TADComparadorNumero.Compare(arr[i], arr[2 * i + 1]) == 0)
+                    if (2 * i + 1 <= tamanho)
                     {
-                        Swap(arr[i], arr[2 * i + 1]);
-                        i = i * 2 + 1;
+                        if (TADComparadorNumero.Compare(arr[2 * i], arr[2 * i + 1]) == 1 || TADComparadorNumero.Compare(arr[2 * i], arr[2 * i + 1]) == 0)
+                        {
+                            Swap(arr[i], arr[2 * i + 1]);
+                            i = i * 2 + 1;
+                        }
+                        else
+                        {
+                            Swap(arr[i], arr[2 * i]);
+                            i *= 2;
+                        }
+                    }
+                    else
+                    {
+                        Swap(arr[i], arr[2 * i]);
+                        i *= 2;
                     }
                 }
                 else break;
@@ -53,12 +71,16 @@ namespace TADFilaPrioridadeHeapArray
             int key = (int)k;
             Item elem = new Item(key, o);
             if (tamanho + 1 < capacity)
+            {
                 arr[tamanho++ + 1] = elem;
+                UpHeap();
+            }
             else
             {
                 Array.Resize(ref arr, capacity << 1);
                 capacity <<= 1;
                 arr[tamanho++ + 1] = elem;
+                UpHeap();
             }
         }
 
