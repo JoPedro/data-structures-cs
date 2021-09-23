@@ -37,27 +37,42 @@ namespace TADHashTable
             Probing, outra considerando por Hashing Duplo.
         */
 
-        // Encontrar elemento utilizando Hashing Duplo
-        /*public object FindElementHashingDuplo(object key)
-        {
-
-        }*/
-
         // Encontrar elemento utilizando Linear Probing
         public object FindElementLinearProbing(object key)
         {
             int h = HashCode(key);
             int cont = 0;
-            while(cont != capacity)
+            while (cont < capacity)
             {
                 Item item = table[h];
-                if (item == null) 
+                if (item == null)
                     return new ENoSuchKey("Chave não encontrada na tabela");
-                else if ((int)item.Key == (int)key) 
+                else if ((int)item.Key == (int)key)
                     return item.Element;
                 else
                 {
                     h = (h + 1) % capacity;
+                    cont++;
+                }
+            }
+            return new ENoSuchKey("Chave não encontrada na tabela");
+        }
+
+        // Encontrar elemento utilizando Hashing Duplo
+        public object FindElementHashingDuplo(object key)
+        {
+            int h = HashCode(key);
+            int cont = 0;
+            while (cont < capacity)
+            {
+                Item item = table[h];
+                if (item == null)
+                    return new ENoSuchKey("Chave não encontrada na tabela");
+                else if ((int)item.Key == (int)key)
+                    return item.Element;
+                else
+                {
+                    h = (h + (7 - (int)key % 7)) % capacity;
                     cont++;
                 }
             }
@@ -69,7 +84,7 @@ namespace TADHashTable
         {
             int h = HashCode(key);
             int cont = 0;
-            while (cont != capacity)
+            while (cont < capacity)
             {
                 if (table[h] == null || table[h].Available == true)
                 {
@@ -90,7 +105,24 @@ namespace TADHashTable
         // Inserir elemento, caso colisão utilizar Hashing Duplo (verificar alfa, duplicar se necessário)
         public void InsertElementHashingDuplo(object key, object element)
         {
-
+            int h = HashCode(key);
+            int cont = 0;
+            while (cont < capacity)
+            {
+                if (table[h] == null || table[h].Available == true)
+                {
+                    table[h] = new Item(key, element);
+                    tamanho++;
+                    if (tamanho > capacity / 2)
+                        RehashHashingDuplo();
+                    break;
+                }
+                else
+                {
+                    h = (h + (7 - (int)key % 7)) % capacity;
+                    cont++;
+                }
+            }
         }
 
         // Efetuar Rehash utilizando Linear Probing
@@ -119,7 +151,24 @@ namespace TADHashTable
         // Efetuar Rehash utilizando Hashing Duplo
         public void RehashHashingDuplo()
         {
-            
+            ArrayList itens = new ArrayList();
+
+            foreach (Item i in table)
+            {
+                if (i != null && i.Available == false)
+                {
+                    itens.Add(i);
+                    i.Available = true;
+                }
+            }
+
+            capacity <<= 1;
+            tamanho = 0;
+
+            Array.Resize(ref table, capacity);
+
+            foreach (Item i in itens)
+                InsertElementHashingDuplo(i.Key, i.Element);
         }
 
         // Remover e retornar elemento, utilizando Linear Probing para encontrá-lo
@@ -127,7 +176,7 @@ namespace TADHashTable
         {
             int h = HashCode(key);
             int cont = 0;
-            while (cont != capacity)
+            while (cont < capacity)
             {
                 Item item = table[h];
                 if (item == null)
@@ -148,10 +197,29 @@ namespace TADHashTable
         }
 
         // Remover e retornar elemento, utilizando Hashing duplo para encontrá-lo
-        /*public object RemoveElementHashingDuplo(object key)
+        public object RemoveElementHashingDuplo(object key)
         {
-
-        }*/
+            int h = HashCode(key);
+            int cont = 0;
+            while (cont < capacity)
+            {
+                Item item = table[h];
+                if (item == null)
+                    return new ENoSuchKey("Chave não encontrada na tabela");
+                else if ((int)item.Key == (int)key)
+                {
+                    item.Available = true;
+                    tamanho--;
+                    return item;
+                }
+                else
+                {
+                    h = (h + (7 - (int)key % 7)) % capacity;
+                    cont++;
+                }
+            }
+            return new ENoSuchKey("Chave não encontrada na tabela");
+        }
 
         // Métodos adicionais
         public int Size()
