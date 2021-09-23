@@ -6,7 +6,10 @@ namespace TADHashTable
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Testes de TADHashTable:\n");
+
+            TesteHashTable teste = new TesteHashTable();
+            teste.TesteLinearProbing();
         }
     }
 }

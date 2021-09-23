@@ -15,9 +15,14 @@ namespace TADHashTable
 
         public TADHashTable()
         {
-            table = new Item[32];
-            capacity = 32;
+            table = new Item[13];
+            capacity = 13;
             tamanho = 0;
+        }
+
+        public Item[] GetTable()
+        {
+            return table;
         }
 
         private int HashCode(object key)
@@ -25,11 +30,18 @@ namespace TADHashTable
             return (int)key % capacity;
         }
 
+        /*
+            Por motivos de eficiência e facilitação dos testes, os métodos de tratamento 
+            de colisão serão ambos considerados no desenvolvimento dos métodos, assim, cada 
+            método há duas versões, uma considerando o tratamento por Linear
+            Probing, outra considerando por Hashing Duplo.
+        */
+
         // Encontrar elemento utilizando Hashing Duplo
-        public object FindElementHashingDuplo(object key)
+        /*public object FindElementHashingDuplo(object key)
         {
 
-        }
+        }*/
 
         // Encontrar elemento utilizando Linear Probing
         public object FindElementLinearProbing(object key)
@@ -41,7 +53,7 @@ namespace TADHashTable
                 Item item = table[h];
                 if (item == null) 
                     return new ENoSuchKey("Chave não encontrada na tabela");
-                else if (item.Key == key) 
+                else if ((int)item.Key == (int)key) 
                     return item.Element;
                 else
                 {
@@ -53,7 +65,7 @@ namespace TADHashTable
         }
 
         // Inserir elemento, caso colisão utilizar Linear Probing (verificar alfa, duplicar se necessário)
-        public void InsertElementLinearProbing(object key, object element, Item[] table)
+        public void InsertElementLinearProbing(object key, object element)
         {
             int h = HashCode(key);
             int cont = 0;
@@ -63,6 +75,8 @@ namespace TADHashTable
                 {
                     table[h] = new Item(key, element);
                     tamanho++;
+                    if (tamanho > capacity / 2)
+                        RehashLinearProbing();
                     break;
                 }
                 else
@@ -70,10 +84,6 @@ namespace TADHashTable
                     h = (h + 1) % capacity;
                     cont++;
                 }
-            }
-            if (tamanho > capacity / 2)
-            {
-                RehashLinearProbing();
             }
         }
 
@@ -86,26 +96,30 @@ namespace TADHashTable
         // Efetuar Rehash utilizando Linear Probing
         public void RehashLinearProbing()
         {
-            IEnumerator keys = Keys();
-            while (keys.MoveNext())
-            {
+            ArrayList itens = new ArrayList();
 
+            foreach (Item i in table)
+            {
+                if (i != null && i.Available == false)
+                {
+                    itens.Add(i);
+                    i.Available = true;
+                }
             }
+
+            capacity <<= 1;
+            tamanho = 0;
+
+            Array.Resize(ref table, capacity);
+
+            foreach (Item i in itens)
+                InsertElementLinearProbing(i.Key, i.Element);
         }
 
         // Efetuar Rehash utilizando Hashing Duplo
         public void RehashHashingDuplo()
         {
-            Item[] newTable = new Item[capacity << 1];
-            capacity <<= 1;
-            tamanho = 0;
-            foreach (Item i in table)
-            {
-                if (i != null && i.Available == false)
-                    InsertElementLinearProbing(i.Key, i.Element, newTable);
-            }
-
-            table = newTable;
+            
         }
 
         // Remover e retornar elemento, utilizando Linear Probing para encontrá-lo
@@ -118,7 +132,7 @@ namespace TADHashTable
                 Item item = table[h];
                 if (item == null)
                     return new ENoSuchKey("Chave não encontrada na tabela");
-                else if (item.Key == key)
+                else if ((int)item.Key == (int)key)
                 {
                     item.Available = true;
                     tamanho--;
@@ -134,15 +148,20 @@ namespace TADHashTable
         }
 
         // Remover e retornar elemento, utilizando Hashing duplo para encontrá-lo
-        public object RemoveElementHashingDuplo(object key)
+        /*public object RemoveElementHashingDuplo(object key)
         {
 
-        }
+        }*/
 
         // Métodos adicionais
         public int Size()
         {
             return tamanho;
+        }
+
+        public int Capacity()
+        {
+            return capacity;
         }
 
         public bool IsEmpty()
