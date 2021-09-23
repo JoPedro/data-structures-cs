@@ -22,7 +22,7 @@ namespace TADHashTable
 
         private int HashCode(object key)
         {
-            return (int)key % tamanho;
+            return (int)key % capacity;
         }
 
         // Encontrar elemento utilizando Hashing Duplo
@@ -36,7 +36,7 @@ namespace TADHashTable
         {
             int h = HashCode(key);
             int cont = 0;
-            while(cont != tamanho)
+            while(cont != capacity)
             {
                 Item item = table[h];
                 if (item == null) 
@@ -45,7 +45,7 @@ namespace TADHashTable
                     return item.Element;
                 else
                 {
-                    h = (h + 1) % tamanho;
+                    h = (h + 1) % capacity;
                     cont++;
                 }
             }
@@ -53,13 +53,32 @@ namespace TADHashTable
         }
 
         // Inserir elemento, caso colisão utilizar Linear Probing (verificar alfa, duplicar se necessário)
-        public void InsertElementLinearProbing(Item item)
+        public void InsertElementLinearProbing(object key, object element, Item[] table)
         {
-            
+            int h = HashCode(key);
+            int cont = 0;
+            while (cont != capacity)
+            {
+                if (table[h] == null || table[h].Available == true)
+                {
+                    table[h] = new Item(key, element);
+                    tamanho++;
+                    break;
+                }
+                else
+                {
+                    h = (h + 1) % capacity;
+                    cont++;
+                }
+            }
+            if (tamanho > capacity / 2)
+            {
+                RehashLinearProbing();
+            }
         }
 
         // Inserir elemento, caso colisão utilizar Hashing Duplo (verificar alfa, duplicar se necessário)
-        public void InsertElementHashingDuplo(Item item)
+        public void InsertElementHashingDuplo(object key, object element)
         {
 
         }
@@ -77,11 +96,16 @@ namespace TADHashTable
         // Efetuar Rehash utilizando Hashing Duplo
         public void RehashHashingDuplo()
         {
-            IEnumerator keys = Keys();
-            while (keys.MoveNext())
+            Item[] newTable = new Item[capacity << 1];
+            capacity <<= 1;
+            tamanho = 0;
+            foreach (Item i in table)
             {
-
+                if (i != null && i.Available == false)
+                    InsertElementLinearProbing(i.Key, i.Element, newTable);
             }
+
+            table = newTable;
         }
 
         // Remover e retornar elemento, utilizando Linear Probing para encontrá-lo
@@ -89,7 +113,7 @@ namespace TADHashTable
         {
             int h = HashCode(key);
             int cont = 0;
-            while (cont != tamanho)
+            while (cont != capacity)
             {
                 Item item = table[h];
                 if (item == null)
@@ -97,11 +121,12 @@ namespace TADHashTable
                 else if (item.Key == key)
                 {
                     item.Available = true;
+                    tamanho--;
                     return item;
                 }
                 else
                 {
-                    h = (h + 1) % tamanho;
+                    h = (h + 1) % capacity;
                     cont++;
                 }
             }
