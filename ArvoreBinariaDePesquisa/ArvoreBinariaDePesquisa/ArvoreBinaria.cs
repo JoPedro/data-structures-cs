@@ -143,5 +143,27 @@ namespace ArvoreBinariaDePesquisa
             Node paraRemover = Encontrar(data);
             if (paraRemover != null) paraRemover.Delete();
         }
+
+        public void Mostrar()
+        {
+            Mostrar(raiz);
+        }
+
+        // Mostrar Árvore de lado
+        private void Mostrar(Node n, int pos = 0)
+        {
+            if (n == null)
+            {
+                for (int i = 0; i < pos; ++i)
+                    Console.Write("\t");
+                Console.WriteLine("");
+                return;
+            }
+            Mostrar(n.Right, pos + 1);
+            for (int i = 0; i < pos; ++i)
+                Console.Write("\t");
+            Console.WriteLine(n.Data);
+            Mostrar(n.Left, pos + 1);
+        }
     }
 }
