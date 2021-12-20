@@ -18,6 +18,7 @@ namespace ArvoreRN
             right = null;
             pai = null;
             cor = 'R';
+            isDuploNegro = false;
         }
 
         private char cor;
@@ -45,28 +46,39 @@ namespace ArvoreRN
             set { right = value; }
         }
 
-        private bool isDeleted;
-        public bool IsDeleted { get { return isDeleted; } }
+        private bool isDuploNegro;
+        public bool IsDuploNegro
+        {
+            get { return isDuploNegro; }
+            set { isDuploNegro = value; }
+        }
 
-        public bool IsRoot(Node n)
+        private bool isDeleted;
+        public bool IsDeleted 
+        { 
+            get { return isDeleted; } 
+            set { isDeleted = value; }
+        }
+
+        public static bool IsRoot(Node n)
         {
             if (n.Pai == null) return true;
             else return false;
         }
 
-        public bool IsFilhoEsquerdo(Node n)
+        public static bool IsFilhoEsquerdo(Node n)
         {
-            if (n.Pai.Data > n.Data) return true;
+            if (n != null && n.Pai.Data > n.Data) return true;
             else return false;
         }
 
-        public bool IsFolha(Node n)
+        public static bool IsFolha(Node n)
         {
             if (n.Left == null && n.Right == null) return true;
             else return false;
         }
 
-        public bool IsNegro(Node n)
+        public static bool IsNegro(Node n)
         {
             if (n == null || n.Cor == 'N') return true;
             else return false;
@@ -167,7 +179,7 @@ namespace ArvoreRN
             }
         }
 
-        public void RotacaoES(Node n, ArvoreRN tree)
+        public static void RotacaoES(Node n, ArvoreRN tree)
         {
             Node nAvo = n.Pai.Pai;
             Node nOldLeft = null;
@@ -189,19 +201,19 @@ namespace ArvoreRN
             }
         }
 
-        public void RotacaoDE(Node n, ArvoreRN tree)
+        public static void RotacaoDE(Node n, ArvoreRN tree)
         {
             RotacaoDS(n, tree);
             RotacaoES(n, tree);
         }
 
-        public void RotacaoDD(Node n, ArvoreRN tree)
+        public static void RotacaoDD(Node n, ArvoreRN tree)
         {
             RotacaoES(n, tree);
             RotacaoDS(n, tree);
         }
  
-        public void RotacaoDS(Node n, ArvoreRN tree)
+        public static void RotacaoDS(Node n, ArvoreRN tree)
         {
             Node nAvo = n.Pai.Pai;
             Node nOldRight = null;

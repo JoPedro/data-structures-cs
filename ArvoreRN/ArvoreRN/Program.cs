@@ -4,6 +4,7 @@ namespace ArvoreRN
 {
     class Program
     {
+        // Classe Main para testes
         static void Main(string[] args)
         {
             ArvoreRN tree = new ArvoreRN();
